@@ -12,6 +12,7 @@ class Item:
     def __init__(self, name: str, price: float, quantity: int) -> None:
         """
         Создание экземпляра класса item.
+        Добавление экземпляра в список all.
 
         :param name: Название товара.
         :param price: Цена за единицу товара.
@@ -25,14 +26,16 @@ class Item:
 
     @property
     def name(self):
+        """Возвращает название товара"""
         return self.__name
 
     @name.setter
-    def name(self, name):
-        if len(name) <= 10:
-            self.__name = name
+    def name(self, new_name):
+        """Записывает название товара согласно условиям."""
+        if len(new_name) <= 10:
+            self.__name = new_name
         else:
-            sale_name = list(name)[:10]
+            sale_name = list(new_name)[:10]
             self.__name = ''.join(sale_name)
 
     def calculate_total_price(self) -> float:
@@ -43,7 +46,7 @@ class Item:
         """
         return self.price * self.quantity
 
-    def apply_discount(self) -> float:
+    def apply_discount(self):
         """
         Применяет установленную скидку для конкретного товара.
         """
@@ -54,13 +57,14 @@ class Item:
         """
         Класс-метод, инициализирующий экземпляры класса `Item` данными из файла.csv.
         """
+        Item.all.clear()
         head, tail = os.path.split(path_file)
         CURRENT_DIR = os.path.dirname(__file__)
         DATA_FOR_PATH = os.path.join(CURRENT_DIR, tail)
-        with open(DATA_FOR_PATH, newline='') as csvfile:
+        with open(DATA_FOR_PATH, encoding='cp1251', newline='') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
-                new_item = cls(row['name'], row['price'], row['quantity'])
+                cls(row['name'], row['price'], row['quantity'])
 
     @staticmethod
     def string_to_number(string):

@@ -25,19 +25,9 @@ def test_name():
     item.name = 'SuperSUPhone'
     assert item.name == 'SuperSUPho'
 
-
 def test_instantiate_from_csv():
-    path_file = 'src/test_items.csv'
-    head, tail = os.path.split(path_file)
-    CURRENT_DIR = os.path.dirname(__file__)
-    DATA_FOR_PATH = os.path.join(CURRENT_DIR, tail)
-    test_list = []
-    with open(DATA_FOR_PATH, newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            new_item = Item(row['name'], row['price'], row['quantity'])
-            test_list.append(new_item)
-    assert test_list[4].name == 'Клавиатура'
+    Item.instantiate_from_csv('src/items.csv')
+    assert len(Item.all) == 5
 
 def test_string_to_number():
     assert Item.string_to_number('5') == 5
