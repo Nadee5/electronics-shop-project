@@ -3,6 +3,7 @@
 import os
 import csv
 from src.item import Item
+from src.phone import Phone
 
 item1 = Item("Смартфон", 10000, 20)
 item2 = Item("Ноутбук", 20000, 5)
@@ -47,3 +48,14 @@ def test___repr__():
 def test___str__():
     item1 = Item("Смартфон", 10000, 20)
     assert str(item1) == 'Смартфон'
+
+def test___add__():
+    item_1 = Item("Смартфон", 10000, 20)
+    phone_1 = Phone("iPhone 14", 120_000, 5, 2)
+    item_2 = 10
+    assert item_1 + phone_1 == 25
+    assert phone_1 + phone_1 == 10
+    assert item_1 + item_2 == 'Сложение невозможно'
+    assert phone_1 + item_2 == 'Сложение невозможно'
+
+
