@@ -9,5 +9,3 @@ def test___repr__():
 def test___init__():
     assert phone1.name == 'iPhone 14' #создание экземпляра
     assert phone1.number_of_sim == 2 #количество симкарт > 0
-
-
