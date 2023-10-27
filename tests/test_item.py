@@ -2,6 +2,10 @@
 
 import os
 import csv
+
+import pytest
+
+from src.instantiatecsverror import InstantiateCSVError
 from src.item import Item
 from src.phone import Phone
 
@@ -35,6 +39,16 @@ def test_instantiate_from_csv():
     assert len(Item.all) == 5
 
 
+def test_instantiate_from_csv_except_file_not_found():
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv('src/atems.csv')
+
+
+def test_instantiate_from_csv_except_file_broke():
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv('src/items_broke.csv')
+
+
 def test_string_to_number():
     assert Item.string_to_number('5') == 5
     assert Item.string_to_number('5.0') == 5
@@ -45,9 +59,11 @@ def test___repr__():
     item1 = Item("Смартфон", 10000, 20)
     assert repr(item1) == "Item('Смартфон', 10000, 20)"
 
+
 def test___str__():
     item1 = Item("Смартфон", 10000, 20)
     assert str(item1) == 'Смартфон'
+
 
 def test___add__():
     item_1 = Item("Смартфон", 10000, 20)
@@ -58,4 +74,7 @@ def test___add__():
     assert item_1 + item_2 == 'Сложение невозможно'
     assert phone_1 + item_2 == 'Сложение невозможно'
 
+# def test_number_of_sim_setter_phone():
+#     with pytest.raises(ValueError):
+#         phone_1 = Phone("iPhone 14", 120_000, 5, 0)
 
